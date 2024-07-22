@@ -19,6 +19,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	k8sjson "k8s.io/apimachinery/pkg/runtime/serializer/json"
 	apiserverv1 "k8s.io/apiserver/pkg/apis/apiserver/v1"
+	apiserverv1beta1 "k8s.io/apiserver/pkg/apis/apiserver/v1beta1"
 	auditv1 "k8s.io/apiserver/pkg/apis/audit/v1"
 	schedulerv1 "k8s.io/kube-scheduler/config/v1"
 
@@ -45,6 +46,11 @@ func (ctrl *RenderConfigsStaticPodController) Inputs() []controller.Input {
 		{
 			Namespace: k8s.ControlPlaneNamespaceName,
 			Type:      k8s.AuditPolicyConfigType,
+			Kind:      controller.InputWeak,
+		},
+		{
+			Namespace: k8s.ControlPlaneNamespaceName,
+			Type:      k8s.AuthenticationConfigType,
 			Kind:      controller.InputWeak,
 		},
 		{
@@ -98,6 +104,17 @@ func (ctrl *RenderConfigsStaticPodController) Run(ctx context.Context, r control
 
 		auditConfig := auditRes.TypedSpec()
 
+		authenticationRes, err := safe.ReaderGetByID[*k8s.AuthenticationConfig](ctx, r, k8s.AuthenticationConfigID)
+		if err != nil {
+			if state.IsNotFoundError(err) {
+				continue
+			}
+
+			return fmt.Errorf("error getting authentication config resource: %w", err)
+		}
+
+		authenticationConfig := authenticationRes.TypedSpec()
+
 		kubeSchedulerRes, err := safe.ReaderGetByID[*k8s.SchedulerConfig](ctx, r, k8s.SchedulerConfigID)
 		if err != nil {
 			if state.IsNotFoundError(err) {
@@ -143,6 +160,10 @@ func (ctrl *RenderConfigsStaticPodController) Run(ctx context.Context, r control
 					{
 						filename: "auditpolicy.yaml",
 						f:        auditPolicyConfig(auditConfig),
+					},
+					{
+						filename: "authenticationconfig.yaml",
+						f:        apiServerAuthenticationConfig(authenticationConfig),
 					},
 				},
 			},
@@ -234,6 +255,18 @@ func auditPolicyConfig(spec *k8s.AuditPolicyConfigSpec) func() (runtime.Object, 
 
 		if err := runtime.DefaultUnstructuredConverter.FromUnstructuredWithValidation(spec.Config, &cfg, true); err != nil {
 			return nil, fmt.Errorf("error unmarshaling audit policy configuration: %w", err)
+		}
+
+		return &cfg, nil
+	}
+}
+
+func apiServerAuthenticationConfig(spec *k8s.AuthenticationConfigSpec) func() (runtime.Object, error) {
+	return func() (runtime.Object, error) {
+		var cfg apiserverv1beta1.AuthenticationConfiguration
+
+		if err := runtime.DefaultUnstructuredConverter.FromUnstructuredWithValidation(spec.Config, &cfg, true); err != nil {
+			return nil, fmt.Errorf("error unmarshaling authentication configuration: %w", err)
 		}
 
 		return &cfg, nil

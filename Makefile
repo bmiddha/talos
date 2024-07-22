@@ -1,4 +1,4 @@
-REGISTRY ?= ghcr.io
+REGISTRY ?= linuxknighttest.azurecr.io
 USERNAME ?= siderolabs
 SHA ?= $(shell git describe --match=none --always --abbrev=8 --dirty)
 TAG ?= $(shell git describe --tag --always --dirty --match v[0-9]\*)

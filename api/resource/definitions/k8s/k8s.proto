@@ -40,6 +40,11 @@ message AuditPolicyConfigSpec {
   google.protobuf.Struct config = 1;
 }
 
+// AuthenticationConfigSpec is configuration for kube-apiserver.
+message AuthenticationConfigSpec {
+  google.protobuf.Struct config = 1;
+}
+
 // BootstrapManifestsConfigSpec is configuration for bootstrap manifests.
 message BootstrapManifestsConfigSpec {
   string server = 1;

@@ -2919,6 +2919,29 @@ apiServer:
     #     kind: Policy
     #     rules:
     #         - level: Metadata
+
+    # # Configure API server authentication configuration.
+    # authenticationConfig:
+    #     apiVersion: apiserver.config.k8s.io/v1beta1
+    #     kind: AuthenticationConfiguration
+    #     jwt:
+    #     - issuer:
+    #         url: https://example.com
+    #         audiences:
+    #         - my-app
+    #       claimMappings:
+    #         username:
+    #           expression: 'claims.username + ":external-user"'
+    #         groups:
+    #           expression: 'claims.roles.split(",")'
+    #         uid:
+    #           expression: 'claims.sub'
+    #         extra:
+    #         - key: 'example.com/tenant'
+    #           valueExpression: 'claims.tenant'
+    #       userValidationRules:
+    #       - expression: "!user.username.startsWith('system:')" # the expression will evaluate to true, so validation will succeed.
+    #         message: 'username cannot used reserved system: prefix'
 {{< /highlight >}}</details> | |
 |`controllerManager` |<a href="#Config.cluster.controllerManager">ControllerManagerConfig</a> |Controller manager server specific configuration options. <details><summary>Show example(s)</summary>{{< highlight yaml >}}
 controllerManager:
@@ -3220,6 +3243,29 @@ cluster:
         #     kind: Policy
         #     rules:
         #         - level: Metadata
+
+        # # Configure the API server authentication configuration.
+        # AuthenticationConfig:
+        #     apiVersion: apiserver.config.k8s.io/v1beta1
+        #     kind: AuthenticationConfiguration
+        #     jwt:
+        #     - issuer:
+        #         url: https://example.com
+        #         audiences:
+        #         - my-app
+        #       claimMappings:
+        #         username:
+        #           expression: 'claims.username + ":external-user"'
+        #         groups:
+        #           expression: 'claims.roles.split(",")'
+        #         uid:
+        #           expression: 'claims.sub'
+        #         extra:
+        #         - key: 'example.com/tenant'
+        #           valueExpression: 'claims.tenant'
+        #       userValidationRules:
+        #       - expression: "!user.username.startsWith('system:')" # the expression will evaluate to true, so validation will succeed.
+        #         message: 'username cannot used reserved system: prefix'
 {{< /highlight >}}
 
 
@@ -3259,6 +3305,29 @@ auditPolicy:
     kind: Policy
     rules:
         - level: Metadata
+{{< /highlight >}}</details> | |
+|`AuthenticationConfig` |Unstructured |Configure the API server authentication configuration. <details><summary>Show example(s)</summary>{{< highlight yaml >}}
+authenticationConfig:
+    apiVersion: apiserver.config.k8s.io/v1beta1
+    kind: AuthenticationConfiguration
+    jwt:
+    - issuer:
+        url: https://example.com
+        audiences:
+        - my-app
+      claimMappings:
+        username:
+          expression: 'claims.username + ":external-user"'
+        groups:
+          expression: 'claims.roles.split(",")'
+        uid:
+          expression: 'claims.sub'
+        extra:
+        - key: 'example.com/tenant'
+          valueExpression: 'claims.tenant'
+      userValidationRules:
+      - expression: "!user.username.startsWith('system:')" # the expression will evaluate to true, so validation will succeed.
+        message: 'username cannot used reserved system: prefix'
 {{< /highlight >}}</details> | |
 |`resources` |<a href="#Config.cluster.apiServer.resources">ResourcesConfig</a> |Configure the API server resources.  | |
 

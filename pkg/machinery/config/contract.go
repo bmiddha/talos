@@ -115,6 +115,11 @@ func (contract *VersionContract) APIServerAuditPolicySupported() bool {
 	return contract.Greater(TalosVersion1_2)
 }
 
+// APIServerAuthenticationConfigSupported returns true if kube-apiserver custom authentication configuration is supported.
+func (contract *VersionContract) APIServerAuthenticationConfigSupported() bool {
+	return contract.Greater(TalosVersion1_8)
+}
+
 // KubeletManifestsDirectoryDisabled returns true if the manifests directory flag is supported.
 func (contract *VersionContract) KubeletManifestsDirectoryDisabled() bool {
 	return contract.Greater(TalosVersion1_2)

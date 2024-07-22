@@ -36,6 +36,7 @@ func (suite *K8sControlPlaneSuite) setupMachine(cfg *config.MachineConfig) {
 
 	rtestutils.AssertResources(suite.Ctx(), suite.T(), suite.State(), []resource.ID{k8s.AdmissionControlConfigID}, func(*k8s.AdmissionControlConfig, *assert.Assertions) {})
 	rtestutils.AssertResources(suite.Ctx(), suite.T(), suite.State(), []resource.ID{k8s.AuditPolicyConfigID}, func(*k8s.AuditPolicyConfig, *assert.Assertions) {})
+	rtestutils.AssertResources(suite.Ctx(), suite.T(), suite.State(), []resource.ID{k8s.AuthenticationConfigID}, func(*k8s.AuthenticationConfig, *assert.Assertions) {})
 	rtestutils.AssertResources(suite.Ctx(), suite.T(), suite.State(), []resource.ID{k8s.APIServerConfigID}, func(*k8s.APIServerConfig, *assert.Assertions) {})
 	rtestutils.AssertResources(suite.Ctx(), suite.T(), suite.State(), []resource.ID{k8s.ControllerManagerConfigID}, func(*k8s.ControllerManagerConfig, *assert.Assertions) {})
 	rtestutils.AssertResources(suite.Ctx(), suite.T(), suite.State(), []resource.ID{k8s.SchedulerConfigID}, func(*k8s.SchedulerConfig, *assert.Assertions) {})
@@ -118,6 +119,7 @@ func (suite *K8sControlPlaneSuite) TestReconcileTransitionWorker() {
 
 	rtestutils.AssertNoResource[*k8s.AdmissionControlConfig](suite.Ctx(), suite.T(), suite.State(), k8s.AdmissionControlConfigID)
 	rtestutils.AssertNoResource[*k8s.AuditPolicyConfig](suite.Ctx(), suite.T(), suite.State(), k8s.AuditPolicyConfigID)
+	rtestutils.AssertNoResource[*k8s.AuthenticationConfig](suite.Ctx(), suite.T(), suite.State(), k8s.AuthenticationConfigID)
 	rtestutils.AssertNoResource[*k8s.APIServerConfig](suite.Ctx(), suite.T(), suite.State(), k8s.APIServerConfigID)
 	rtestutils.AssertNoResource[*k8s.ControllerManagerConfig](suite.Ctx(), suite.T(), suite.State(), k8s.ControllerManagerConfigID)
 	rtestutils.AssertNoResource[*k8s.SchedulerConfig](suite.Ctx(), suite.T(), suite.State(), k8s.SchedulerConfigID)
@@ -559,6 +561,7 @@ func TestK8sControlPlaneSuite(t *testing.T) {
 				suite.Require().NoError(suite.Runtime().RegisterController(k8sctrl.NewControlPlaneAPIServerController()))
 				suite.Require().NoError(suite.Runtime().RegisterController(k8sctrl.NewControlPlaneAdmissionControlController()))
 				suite.Require().NoError(suite.Runtime().RegisterController(k8sctrl.NewControlPlaneAuditPolicyController()))
+				suite.Require().NoError(suite.Runtime().RegisterController(k8sctrl.NewControlPlaneAuthenticationConfigController()))
 				suite.Require().NoError(suite.Runtime().RegisterController(k8sctrl.NewControlPlaneBootstrapManifestsController()))
 				suite.Require().NoError(suite.Runtime().RegisterController(k8sctrl.NewControlPlaneControllerManagerController()))
 				suite.Require().NoError(suite.Runtime().RegisterController(k8sctrl.NewControlPlaneExtraManifestsController()))

@@ -1435,6 +1435,13 @@ func (APIServerConfig) Doc() *encoder.Doc {
 				Comments:    [3]string{"" /* encoder.HeadComment */, "Configure the API server audit policy." /* encoder.LineComment */, "" /* encoder.FootComment */},
 			},
 			{
+				Name:        "authenticationConfig",
+				Type:        "Unstructured",
+				Note:        "",
+				Description: "Configure API server authentication.",
+				Comments:    [3]string{"" /* encoder.HeadComment */, "Configure API server authentication." /* encoder.LineComment */, "" /* encoder.FootComment */},
+			},
+			{
 				Name:        "resources",
 				Type:        "ResourcesConfig",
 				Note:        "",
@@ -1449,6 +1456,8 @@ func (APIServerConfig) Doc() *encoder.Doc {
 	doc.Fields[0].AddExample("", clusterAPIServerImageExample())
 	doc.Fields[6].AddExample("", admissionControlConfigExample())
 	doc.Fields[7].AddExample("", APIServerDefaultAuditPolicy)
+	doc.Fields[8].AddExample("", APIServerDefaultAuditPolicy)
+	// TODO bmiddha: Add example for authenticationConfig
 
 	return doc
 }

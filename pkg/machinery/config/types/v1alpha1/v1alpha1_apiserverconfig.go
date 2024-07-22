@@ -27,6 +27,20 @@ var APIServerDefaultAuditPolicy = Unstructured{
 	},
 }
 
+// APIServerDefaultAuthenticationConfig is the default kube-apiserver audit policy.
+var APIServerDefaultAuthenticationConfig = Unstructured{
+	// TODO bmiddha: Update this to the correct default value.
+	Object: map[string]interface{}{
+		"apiVersion": "audit.k8s.io/v1",
+		"kind":       "Policy",
+		"rules": []interface{}{
+			map[string]interface{}{
+				"level": "Metadata",
+			},
+		},
+	},
+}
+
 // Image implements the config.APIServer interface.
 func (a *APIServerConfig) Image() string {
 	image := a.ContainerImage
@@ -70,6 +84,15 @@ func (a *APIServerConfig) AuditPolicy() map[string]interface{} {
 	}
 
 	return a.AuditPolicyConfig.Object
+}
+
+// Authentication implements the config.APIServer interface.
+func (a *APIServerConfig) Authentication() map[string]interface{} {
+	if len(a.AuthenticationConfig.Object) == 0 {
+		return APIServerDefaultAuthenticationConfig.DeepCopy().Object
+	}
+
+	return a.AuthenticationConfig.Object
 }
 
 // Resources implements the config.Resources interface.

@@ -142,6 +142,13 @@ func (in *Input) init() ([]config.Document, error) {
 		auditPolicyConfig = v1alpha1.APIServerDefaultAuditPolicy
 	}
 
+	var authenticationConfig v1alpha1.Unstructured
+
+	if in.Options.VersionContract.APIServerAuthenticationConfigSupported() {
+		// TODO bmiddha: Add support for authentication config
+		authenticationConfig = v1alpha1.APIServerDefaultAuditPolicy
+	}
+
 	cluster := &v1alpha1.ClusterConfig{
 		ClusterID:     in.Options.SecretsBundle.Cluster.ID,
 		ClusterName:   in.ClusterName,
@@ -155,6 +162,7 @@ func (in *Input) init() ([]config.Document, error) {
 			ContainerImage:         emptyIf(fmt.Sprintf("%s:v%s", constants.KubernetesAPIServerImage, in.KubernetesVersion), in.KubernetesVersion),
 			AdmissionControlConfig: admissionControlConfig,
 			AuditPolicyConfig:      auditPolicyConfig,
+			AuthenticationConfig:   authenticationConfig,
 		},
 		ControllerManagerConfig: &v1alpha1.ControllerManagerConfig{
 			ContainerImage: emptyIf(fmt.Sprintf("%s:v%s", constants.KubernetesControllerManagerImage, in.KubernetesVersion), in.KubernetesVersion),

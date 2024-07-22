@@ -80,6 +80,13 @@
           "markdownDescription": "Configure the API server audit policy.",
           "x-intellij-html-description": "\u003cp\u003eConfigure the API server audit policy.\u003c/p\u003e\n"
         },
+        "authenticationConfig": {
+          "type": "object",
+          "title": "authenticationConfig",
+          "description": "Configure API server authentication.\n",
+          "markdownDescription": "Configure API server authentication.",
+          "x-intellij-html-description": "\u003cp\u003eConfigure API server authentication.\u003c/p\u003e\n"
+        },
         "resources": {
           "type": "object",
           "title": "resources",

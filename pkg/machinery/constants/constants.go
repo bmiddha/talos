@@ -454,6 +454,9 @@ const (
 	// AuditPolicyPath is the path to the audit-policy.yaml relative to initramfs.
 	AuditPolicyPath = KubernetesConfigBaseDir + "/" + "audit-policy.yaml"
 
+	// AuthenticationConfigPath is the path to the authenticationconfig.yaml relative to initramfs.
+	AuthenticationConfigPath = KubernetesConfigBaseDir + "/" + "authenticationconfig.yaml"
+
 	// EncryptionConfigPath is the path to the EncryptionConfig relative to initramfs.
 	EncryptionConfigPath = KubernetesConfigBaseDir + "/" + "encryptionconfig.yaml"
 

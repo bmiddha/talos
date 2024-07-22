@@ -57,6 +57,7 @@ func (in *APIServerConfig) DeepCopyInto(out *APIServerConfig) {
 		}
 	}
 	in.AuditPolicyConfig.DeepCopyInto(&out.AuditPolicyConfig)
+	in.AuthenticationConfig.DeepCopyInto(&out.AuthenticationConfig)
 	if in.ResourcesConfig != nil {
 		in, out := &in.ResourcesConfig, &out.ResourcesConfig
 		*out = new(ResourcesConfig)
