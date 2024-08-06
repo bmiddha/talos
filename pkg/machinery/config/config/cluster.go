@@ -83,6 +83,8 @@ type APIServer interface {
 	DisablePodSecurityPolicy() bool
 	AdmissionControl() []AdmissionPlugin
 	AuditPolicy() map[string]any
+	StructuredAuthentication() map[string]any
+	StructuredAuthorization() map[string]any
 	Resources() Resources
 }
 

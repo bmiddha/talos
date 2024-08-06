@@ -2297,6 +2297,102 @@ func (x *StaticPodStatusSpec) GetPodStatus() *structpb.Struct {
 	return nil
 }
 
+// StructuredAuthenticationConfigSpec is structured authentication configuration for kube-apiserver.
+type StructuredAuthenticationConfigSpec struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Config *structpb.Struct `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
+}
+
+func (x *StructuredAuthenticationConfigSpec) Reset() {
+	*x = StructuredAuthenticationConfigSpec{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_resource_definitions_k8s_k8s_proto_msgTypes[33]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StructuredAuthenticationConfigSpec) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StructuredAuthenticationConfigSpec) ProtoMessage() {}
+
+func (x *StructuredAuthenticationConfigSpec) ProtoReflect() protoreflect.Message {
+	mi := &file_resource_definitions_k8s_k8s_proto_msgTypes[33]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StructuredAuthenticationConfigSpec.ProtoReflect.Descriptor instead.
+func (*StructuredAuthenticationConfigSpec) Descriptor() ([]byte, []int) {
+	return file_resource_definitions_k8s_k8s_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *StructuredAuthenticationConfigSpec) GetConfig() *structpb.Struct {
+	if x != nil {
+		return x.Config
+	}
+	return nil
+}
+
+// StructuredAuthorizationConfigSpec is structured authorization configuration for kube-apiserver.
+type StructuredAuthorizationConfigSpec struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Config *structpb.Struct `protobuf:"bytes,1,opt,name=config,proto3" json:"config,omitempty"`
+}
+
+func (x *StructuredAuthorizationConfigSpec) Reset() {
+	*x = StructuredAuthorizationConfigSpec{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_resource_definitions_k8s_k8s_proto_msgTypes[34]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StructuredAuthorizationConfigSpec) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StructuredAuthorizationConfigSpec) ProtoMessage() {}
+
+func (x *StructuredAuthorizationConfigSpec) ProtoReflect() protoreflect.Message {
+	mi := &file_resource_definitions_k8s_k8s_proto_msgTypes[34]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StructuredAuthorizationConfigSpec.ProtoReflect.Descriptor instead.
+func (*StructuredAuthorizationConfigSpec) Descriptor() ([]byte, []int) {
+	return file_resource_definitions_k8s_k8s_proto_rawDescGZIP(), []int{34}
+}
+
+func (x *StructuredAuthorizationConfigSpec) GetConfig() *structpb.Struct {
+	if x != nil {
+		return x.Config
+	}
+	return nil
+}
+
 var File_resource_definitions_k8s_k8s_proto protoreflect.FileDescriptor
 
 var file_resource_definitions_k8s_k8s_proto_rawDesc = []byte{
@@ -2766,12 +2862,23 @@ var file_resource_definitions_k8s_k8s_proto_rawDesc = []byte{
 	0x36, 0x0a, 0x0a, 0x70, 0x6f, 0x64, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x01, 0x20,
 	0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f,
 	0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x53, 0x74, 0x72, 0x75, 0x63, 0x74, 0x52, 0x09, 0x70, 0x6f,
-	0x64, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x42, 0x48, 0x5a, 0x46, 0x67, 0x69, 0x74, 0x68, 0x75,
-	0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x73, 0x69, 0x64, 0x65, 0x72, 0x6f, 0x6c, 0x61, 0x62, 0x73,
-	0x2f, 0x74, 0x61, 0x6c, 0x6f, 0x73, 0x2f, 0x70, 0x6b, 0x67, 0x2f, 0x6d, 0x61, 0x63, 0x68, 0x69,
-	0x6e, 0x65, 0x72, 0x79, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x72, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63,
-	0x65, 0x2f, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2f, 0x6b, 0x38,
-	0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x64, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0x55, 0x0a, 0x22, 0x53, 0x74, 0x72, 0x75, 0x63,
+	0x74, 0x75, 0x72, 0x65, 0x64, 0x41, 0x75, 0x74, 0x68, 0x65, 0x6e, 0x74, 0x69, 0x63, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x53, 0x70, 0x65, 0x63, 0x12, 0x2f, 0x0a,
+	0x06, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e,
+	0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e,
+	0x53, 0x74, 0x72, 0x75, 0x63, 0x74, 0x52, 0x06, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x22, 0x54,
+	0x0a, 0x21, 0x53, 0x74, 0x72, 0x75, 0x63, 0x74, 0x75, 0x72, 0x65, 0x64, 0x41, 0x75, 0x74, 0x68,
+	0x6f, 0x72, 0x69, 0x7a, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x53,
+	0x70, 0x65, 0x63, 0x12, 0x2f, 0x0a, 0x06, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x53, 0x74, 0x72, 0x75, 0x63, 0x74, 0x52, 0x06, 0x63, 0x6f,
+	0x6e, 0x66, 0x69, 0x67, 0x42, 0x48, 0x5a, 0x46, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63,
+	0x6f, 0x6d, 0x2f, 0x73, 0x69, 0x64, 0x65, 0x72, 0x6f, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x74, 0x61,
+	0x6c, 0x6f, 0x73, 0x2f, 0x70, 0x6b, 0x67, 0x2f, 0x6d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x72,
+	0x79, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x72, 0x65, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x2f, 0x64,
+	0x65, 0x66, 0x69, 0x6e, 0x69, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2f, 0x6b, 0x38, 0x73, 0x62, 0x06,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -2786,100 +2893,104 @@ func file_resource_definitions_k8s_k8s_proto_rawDescGZIP() []byte {
 	return file_resource_definitions_k8s_k8s_proto_rawDescData
 }
 
-var file_resource_definitions_k8s_k8s_proto_msgTypes = make([]protoimpl.MessageInfo, 45)
+var file_resource_definitions_k8s_k8s_proto_msgTypes = make([]protoimpl.MessageInfo, 47)
 var file_resource_definitions_k8s_k8s_proto_goTypes = []any{
-	(*APIServerConfigSpec)(nil),          // 0: talos.resource.definitions.k8s.APIServerConfigSpec
-	(*AdmissionControlConfigSpec)(nil),   // 1: talos.resource.definitions.k8s.AdmissionControlConfigSpec
-	(*AdmissionPluginSpec)(nil),          // 2: talos.resource.definitions.k8s.AdmissionPluginSpec
-	(*AuditPolicyConfigSpec)(nil),        // 3: talos.resource.definitions.k8s.AuditPolicyConfigSpec
-	(*BootstrapManifestsConfigSpec)(nil), // 4: talos.resource.definitions.k8s.BootstrapManifestsConfigSpec
-	(*ConfigStatusSpec)(nil),             // 5: talos.resource.definitions.k8s.ConfigStatusSpec
-	(*ControllerManagerConfigSpec)(nil),  // 6: talos.resource.definitions.k8s.ControllerManagerConfigSpec
-	(*EndpointSpec)(nil),                 // 7: talos.resource.definitions.k8s.EndpointSpec
-	(*ExtraManifest)(nil),                // 8: talos.resource.definitions.k8s.ExtraManifest
-	(*ExtraManifestsConfigSpec)(nil),     // 9: talos.resource.definitions.k8s.ExtraManifestsConfigSpec
-	(*ExtraVolume)(nil),                  // 10: talos.resource.definitions.k8s.ExtraVolume
-	(*KubePrismConfigSpec)(nil),          // 11: talos.resource.definitions.k8s.KubePrismConfigSpec
-	(*KubePrismEndpoint)(nil),            // 12: talos.resource.definitions.k8s.KubePrismEndpoint
-	(*KubePrismEndpointsSpec)(nil),       // 13: talos.resource.definitions.k8s.KubePrismEndpointsSpec
-	(*KubePrismStatusesSpec)(nil),        // 14: talos.resource.definitions.k8s.KubePrismStatusesSpec
-	(*KubeletConfigSpec)(nil),            // 15: talos.resource.definitions.k8s.KubeletConfigSpec
-	(*KubeletSpecSpec)(nil),              // 16: talos.resource.definitions.k8s.KubeletSpecSpec
-	(*ManifestSpec)(nil),                 // 17: talos.resource.definitions.k8s.ManifestSpec
-	(*ManifestStatusSpec)(nil),           // 18: talos.resource.definitions.k8s.ManifestStatusSpec
-	(*NodeAnnotationSpecSpec)(nil),       // 19: talos.resource.definitions.k8s.NodeAnnotationSpecSpec
-	(*NodeIPConfigSpec)(nil),             // 20: talos.resource.definitions.k8s.NodeIPConfigSpec
-	(*NodeIPSpec)(nil),                   // 21: talos.resource.definitions.k8s.NodeIPSpec
-	(*NodeLabelSpecSpec)(nil),            // 22: talos.resource.definitions.k8s.NodeLabelSpecSpec
-	(*NodeStatusSpec)(nil),               // 23: talos.resource.definitions.k8s.NodeStatusSpec
-	(*NodeTaintSpecSpec)(nil),            // 24: talos.resource.definitions.k8s.NodeTaintSpecSpec
-	(*NodenameSpec)(nil),                 // 25: talos.resource.definitions.k8s.NodenameSpec
-	(*Resources)(nil),                    // 26: talos.resource.definitions.k8s.Resources
-	(*SchedulerConfigSpec)(nil),          // 27: talos.resource.definitions.k8s.SchedulerConfigSpec
-	(*SecretsStatusSpec)(nil),            // 28: talos.resource.definitions.k8s.SecretsStatusSpec
-	(*SingleManifest)(nil),               // 29: talos.resource.definitions.k8s.SingleManifest
-	(*StaticPodServerStatusSpec)(nil),    // 30: talos.resource.definitions.k8s.StaticPodServerStatusSpec
-	(*StaticPodSpec)(nil),                // 31: talos.resource.definitions.k8s.StaticPodSpec
-	(*StaticPodStatusSpec)(nil),          // 32: talos.resource.definitions.k8s.StaticPodStatusSpec
-	nil,                                  // 33: talos.resource.definitions.k8s.APIServerConfigSpec.ExtraArgsEntry
-	nil,                                  // 34: talos.resource.definitions.k8s.APIServerConfigSpec.EnvironmentVariablesEntry
-	nil,                                  // 35: talos.resource.definitions.k8s.ControllerManagerConfigSpec.ExtraArgsEntry
-	nil,                                  // 36: talos.resource.definitions.k8s.ControllerManagerConfigSpec.EnvironmentVariablesEntry
-	nil,                                  // 37: talos.resource.definitions.k8s.ExtraManifest.ExtraHeadersEntry
-	nil,                                  // 38: talos.resource.definitions.k8s.KubeletConfigSpec.ExtraArgsEntry
-	nil,                                  // 39: talos.resource.definitions.k8s.NodeStatusSpec.LabelsEntry
-	nil,                                  // 40: talos.resource.definitions.k8s.NodeStatusSpec.AnnotationsEntry
-	nil,                                  // 41: talos.resource.definitions.k8s.Resources.RequestsEntry
-	nil,                                  // 42: talos.resource.definitions.k8s.Resources.LimitsEntry
-	nil,                                  // 43: talos.resource.definitions.k8s.SchedulerConfigSpec.ExtraArgsEntry
-	nil,                                  // 44: talos.resource.definitions.k8s.SchedulerConfigSpec.EnvironmentVariablesEntry
-	(*structpb.Struct)(nil),              // 45: google.protobuf.Struct
-	(*common.NetIP)(nil),                 // 46: common.NetIP
-	(*proto.Mount)(nil),                  // 47: talos.resource.definitions.proto.Mount
+	(*APIServerConfigSpec)(nil),                // 0: talos.resource.definitions.k8s.APIServerConfigSpec
+	(*AdmissionControlConfigSpec)(nil),         // 1: talos.resource.definitions.k8s.AdmissionControlConfigSpec
+	(*AdmissionPluginSpec)(nil),                // 2: talos.resource.definitions.k8s.AdmissionPluginSpec
+	(*AuditPolicyConfigSpec)(nil),              // 3: talos.resource.definitions.k8s.AuditPolicyConfigSpec
+	(*BootstrapManifestsConfigSpec)(nil),       // 4: talos.resource.definitions.k8s.BootstrapManifestsConfigSpec
+	(*ConfigStatusSpec)(nil),                   // 5: talos.resource.definitions.k8s.ConfigStatusSpec
+	(*ControllerManagerConfigSpec)(nil),        // 6: talos.resource.definitions.k8s.ControllerManagerConfigSpec
+	(*EndpointSpec)(nil),                       // 7: talos.resource.definitions.k8s.EndpointSpec
+	(*ExtraManifest)(nil),                      // 8: talos.resource.definitions.k8s.ExtraManifest
+	(*ExtraManifestsConfigSpec)(nil),           // 9: talos.resource.definitions.k8s.ExtraManifestsConfigSpec
+	(*ExtraVolume)(nil),                        // 10: talos.resource.definitions.k8s.ExtraVolume
+	(*KubePrismConfigSpec)(nil),                // 11: talos.resource.definitions.k8s.KubePrismConfigSpec
+	(*KubePrismEndpoint)(nil),                  // 12: talos.resource.definitions.k8s.KubePrismEndpoint
+	(*KubePrismEndpointsSpec)(nil),             // 13: talos.resource.definitions.k8s.KubePrismEndpointsSpec
+	(*KubePrismStatusesSpec)(nil),              // 14: talos.resource.definitions.k8s.KubePrismStatusesSpec
+	(*KubeletConfigSpec)(nil),                  // 15: talos.resource.definitions.k8s.KubeletConfigSpec
+	(*KubeletSpecSpec)(nil),                    // 16: talos.resource.definitions.k8s.KubeletSpecSpec
+	(*ManifestSpec)(nil),                       // 17: talos.resource.definitions.k8s.ManifestSpec
+	(*ManifestStatusSpec)(nil),                 // 18: talos.resource.definitions.k8s.ManifestStatusSpec
+	(*NodeAnnotationSpecSpec)(nil),             // 19: talos.resource.definitions.k8s.NodeAnnotationSpecSpec
+	(*NodeIPConfigSpec)(nil),                   // 20: talos.resource.definitions.k8s.NodeIPConfigSpec
+	(*NodeIPSpec)(nil),                         // 21: talos.resource.definitions.k8s.NodeIPSpec
+	(*NodeLabelSpecSpec)(nil),                  // 22: talos.resource.definitions.k8s.NodeLabelSpecSpec
+	(*NodeStatusSpec)(nil),                     // 23: talos.resource.definitions.k8s.NodeStatusSpec
+	(*NodeTaintSpecSpec)(nil),                  // 24: talos.resource.definitions.k8s.NodeTaintSpecSpec
+	(*NodenameSpec)(nil),                       // 25: talos.resource.definitions.k8s.NodenameSpec
+	(*Resources)(nil),                          // 26: talos.resource.definitions.k8s.Resources
+	(*SchedulerConfigSpec)(nil),                // 27: talos.resource.definitions.k8s.SchedulerConfigSpec
+	(*SecretsStatusSpec)(nil),                  // 28: talos.resource.definitions.k8s.SecretsStatusSpec
+	(*SingleManifest)(nil),                     // 29: talos.resource.definitions.k8s.SingleManifest
+	(*StaticPodServerStatusSpec)(nil),          // 30: talos.resource.definitions.k8s.StaticPodServerStatusSpec
+	(*StaticPodSpec)(nil),                      // 31: talos.resource.definitions.k8s.StaticPodSpec
+	(*StaticPodStatusSpec)(nil),                // 32: talos.resource.definitions.k8s.StaticPodStatusSpec
+	(*StructuredAuthenticationConfigSpec)(nil), // 33: talos.resource.definitions.k8s.StructuredAuthenticationConfigSpec
+	(*StructuredAuthorizationConfigSpec)(nil),  // 34: talos.resource.definitions.k8s.StructuredAuthorizationConfigSpec
+	nil,                     // 35: talos.resource.definitions.k8s.APIServerConfigSpec.ExtraArgsEntry
+	nil,                     // 36: talos.resource.definitions.k8s.APIServerConfigSpec.EnvironmentVariablesEntry
+	nil,                     // 37: talos.resource.definitions.k8s.ControllerManagerConfigSpec.ExtraArgsEntry
+	nil,                     // 38: talos.resource.definitions.k8s.ControllerManagerConfigSpec.EnvironmentVariablesEntry
+	nil,                     // 39: talos.resource.definitions.k8s.ExtraManifest.ExtraHeadersEntry
+	nil,                     // 40: talos.resource.definitions.k8s.KubeletConfigSpec.ExtraArgsEntry
+	nil,                     // 41: talos.resource.definitions.k8s.NodeStatusSpec.LabelsEntry
+	nil,                     // 42: talos.resource.definitions.k8s.NodeStatusSpec.AnnotationsEntry
+	nil,                     // 43: talos.resource.definitions.k8s.Resources.RequestsEntry
+	nil,                     // 44: talos.resource.definitions.k8s.Resources.LimitsEntry
+	nil,                     // 45: talos.resource.definitions.k8s.SchedulerConfigSpec.ExtraArgsEntry
+	nil,                     // 46: talos.resource.definitions.k8s.SchedulerConfigSpec.EnvironmentVariablesEntry
+	(*structpb.Struct)(nil), // 47: google.protobuf.Struct
+	(*common.NetIP)(nil),    // 48: common.NetIP
+	(*proto.Mount)(nil),     // 49: talos.resource.definitions.proto.Mount
 }
 var file_resource_definitions_k8s_k8s_proto_depIdxs = []int32{
-	33, // 0: talos.resource.definitions.k8s.APIServerConfigSpec.extra_args:type_name -> talos.resource.definitions.k8s.APIServerConfigSpec.ExtraArgsEntry
+	35, // 0: talos.resource.definitions.k8s.APIServerConfigSpec.extra_args:type_name -> talos.resource.definitions.k8s.APIServerConfigSpec.ExtraArgsEntry
 	10, // 1: talos.resource.definitions.k8s.APIServerConfigSpec.extra_volumes:type_name -> talos.resource.definitions.k8s.ExtraVolume
-	34, // 2: talos.resource.definitions.k8s.APIServerConfigSpec.environment_variables:type_name -> talos.resource.definitions.k8s.APIServerConfigSpec.EnvironmentVariablesEntry
+	36, // 2: talos.resource.definitions.k8s.APIServerConfigSpec.environment_variables:type_name -> talos.resource.definitions.k8s.APIServerConfigSpec.EnvironmentVariablesEntry
 	26, // 3: talos.resource.definitions.k8s.APIServerConfigSpec.resources:type_name -> talos.resource.definitions.k8s.Resources
 	2,  // 4: talos.resource.definitions.k8s.AdmissionControlConfigSpec.config:type_name -> talos.resource.definitions.k8s.AdmissionPluginSpec
-	45, // 5: talos.resource.definitions.k8s.AdmissionPluginSpec.configuration:type_name -> google.protobuf.Struct
-	45, // 6: talos.resource.definitions.k8s.AuditPolicyConfigSpec.config:type_name -> google.protobuf.Struct
-	35, // 7: talos.resource.definitions.k8s.ControllerManagerConfigSpec.extra_args:type_name -> talos.resource.definitions.k8s.ControllerManagerConfigSpec.ExtraArgsEntry
+	47, // 5: talos.resource.definitions.k8s.AdmissionPluginSpec.configuration:type_name -> google.protobuf.Struct
+	47, // 6: talos.resource.definitions.k8s.AuditPolicyConfigSpec.config:type_name -> google.protobuf.Struct
+	37, // 7: talos.resource.definitions.k8s.ControllerManagerConfigSpec.extra_args:type_name -> talos.resource.definitions.k8s.ControllerManagerConfigSpec.ExtraArgsEntry
 	10, // 8: talos.resource.definitions.k8s.ControllerManagerConfigSpec.extra_volumes:type_name -> talos.resource.definitions.k8s.ExtraVolume
-	36, // 9: talos.resource.definitions.k8s.ControllerManagerConfigSpec.environment_variables:type_name -> talos.resource.definitions.k8s.ControllerManagerConfigSpec.EnvironmentVariablesEntry
+	38, // 9: talos.resource.definitions.k8s.ControllerManagerConfigSpec.environment_variables:type_name -> talos.resource.definitions.k8s.ControllerManagerConfigSpec.EnvironmentVariablesEntry
 	26, // 10: talos.resource.definitions.k8s.ControllerManagerConfigSpec.resources:type_name -> talos.resource.definitions.k8s.Resources
-	46, // 11: talos.resource.definitions.k8s.EndpointSpec.addresses:type_name -> common.NetIP
-	37, // 12: talos.resource.definitions.k8s.ExtraManifest.extra_headers:type_name -> talos.resource.definitions.k8s.ExtraManifest.ExtraHeadersEntry
+	48, // 11: talos.resource.definitions.k8s.EndpointSpec.addresses:type_name -> common.NetIP
+	39, // 12: talos.resource.definitions.k8s.ExtraManifest.extra_headers:type_name -> talos.resource.definitions.k8s.ExtraManifest.ExtraHeadersEntry
 	8,  // 13: talos.resource.definitions.k8s.ExtraManifestsConfigSpec.extra_manifests:type_name -> talos.resource.definitions.k8s.ExtraManifest
 	12, // 14: talos.resource.definitions.k8s.KubePrismConfigSpec.endpoints:type_name -> talos.resource.definitions.k8s.KubePrismEndpoint
 	12, // 15: talos.resource.definitions.k8s.KubePrismEndpointsSpec.endpoints:type_name -> talos.resource.definitions.k8s.KubePrismEndpoint
-	38, // 16: talos.resource.definitions.k8s.KubeletConfigSpec.extra_args:type_name -> talos.resource.definitions.k8s.KubeletConfigSpec.ExtraArgsEntry
-	47, // 17: talos.resource.definitions.k8s.KubeletConfigSpec.extra_mounts:type_name -> talos.resource.definitions.proto.Mount
-	45, // 18: talos.resource.definitions.k8s.KubeletConfigSpec.extra_config:type_name -> google.protobuf.Struct
-	45, // 19: talos.resource.definitions.k8s.KubeletConfigSpec.credential_provider_config:type_name -> google.protobuf.Struct
-	47, // 20: talos.resource.definitions.k8s.KubeletSpecSpec.extra_mounts:type_name -> talos.resource.definitions.proto.Mount
-	45, // 21: talos.resource.definitions.k8s.KubeletSpecSpec.config:type_name -> google.protobuf.Struct
-	45, // 22: talos.resource.definitions.k8s.KubeletSpecSpec.credential_provider_config:type_name -> google.protobuf.Struct
+	40, // 16: talos.resource.definitions.k8s.KubeletConfigSpec.extra_args:type_name -> talos.resource.definitions.k8s.KubeletConfigSpec.ExtraArgsEntry
+	49, // 17: talos.resource.definitions.k8s.KubeletConfigSpec.extra_mounts:type_name -> talos.resource.definitions.proto.Mount
+	47, // 18: talos.resource.definitions.k8s.KubeletConfigSpec.extra_config:type_name -> google.protobuf.Struct
+	47, // 19: talos.resource.definitions.k8s.KubeletConfigSpec.credential_provider_config:type_name -> google.protobuf.Struct
+	49, // 20: talos.resource.definitions.k8s.KubeletSpecSpec.extra_mounts:type_name -> talos.resource.definitions.proto.Mount
+	47, // 21: talos.resource.definitions.k8s.KubeletSpecSpec.config:type_name -> google.protobuf.Struct
+	47, // 22: talos.resource.definitions.k8s.KubeletSpecSpec.credential_provider_config:type_name -> google.protobuf.Struct
 	29, // 23: talos.resource.definitions.k8s.ManifestSpec.items:type_name -> talos.resource.definitions.k8s.SingleManifest
-	46, // 24: talos.resource.definitions.k8s.NodeIPSpec.addresses:type_name -> common.NetIP
-	39, // 25: talos.resource.definitions.k8s.NodeStatusSpec.labels:type_name -> talos.resource.definitions.k8s.NodeStatusSpec.LabelsEntry
-	40, // 26: talos.resource.definitions.k8s.NodeStatusSpec.annotations:type_name -> talos.resource.definitions.k8s.NodeStatusSpec.AnnotationsEntry
-	41, // 27: talos.resource.definitions.k8s.Resources.requests:type_name -> talos.resource.definitions.k8s.Resources.RequestsEntry
-	42, // 28: talos.resource.definitions.k8s.Resources.limits:type_name -> talos.resource.definitions.k8s.Resources.LimitsEntry
-	43, // 29: talos.resource.definitions.k8s.SchedulerConfigSpec.extra_args:type_name -> talos.resource.definitions.k8s.SchedulerConfigSpec.ExtraArgsEntry
+	48, // 24: talos.resource.definitions.k8s.NodeIPSpec.addresses:type_name -> common.NetIP
+	41, // 25: talos.resource.definitions.k8s.NodeStatusSpec.labels:type_name -> talos.resource.definitions.k8s.NodeStatusSpec.LabelsEntry
+	42, // 26: talos.resource.definitions.k8s.NodeStatusSpec.annotations:type_name -> talos.resource.definitions.k8s.NodeStatusSpec.AnnotationsEntry
+	43, // 27: talos.resource.definitions.k8s.Resources.requests:type_name -> talos.resource.definitions.k8s.Resources.RequestsEntry
+	44, // 28: talos.resource.definitions.k8s.Resources.limits:type_name -> talos.resource.definitions.k8s.Resources.LimitsEntry
+	45, // 29: talos.resource.definitions.k8s.SchedulerConfigSpec.extra_args:type_name -> talos.resource.definitions.k8s.SchedulerConfigSpec.ExtraArgsEntry
 	10, // 30: talos.resource.definitions.k8s.SchedulerConfigSpec.extra_volumes:type_name -> talos.resource.definitions.k8s.ExtraVolume
-	44, // 31: talos.resource.definitions.k8s.SchedulerConfigSpec.environment_variables:type_name -> talos.resource.definitions.k8s.SchedulerConfigSpec.EnvironmentVariablesEntry
+	46, // 31: talos.resource.definitions.k8s.SchedulerConfigSpec.environment_variables:type_name -> talos.resource.definitions.k8s.SchedulerConfigSpec.EnvironmentVariablesEntry
 	26, // 32: talos.resource.definitions.k8s.SchedulerConfigSpec.resources:type_name -> talos.resource.definitions.k8s.Resources
-	45, // 33: talos.resource.definitions.k8s.SchedulerConfigSpec.config:type_name -> google.protobuf.Struct
-	45, // 34: talos.resource.definitions.k8s.SingleManifest.object:type_name -> google.protobuf.Struct
-	45, // 35: talos.resource.definitions.k8s.StaticPodSpec.pod:type_name -> google.protobuf.Struct
-	45, // 36: talos.resource.definitions.k8s.StaticPodStatusSpec.pod_status:type_name -> google.protobuf.Struct
-	37, // [37:37] is the sub-list for method output_type
-	37, // [37:37] is the sub-list for method input_type
-	37, // [37:37] is the sub-list for extension type_name
-	37, // [37:37] is the sub-list for extension extendee
-	0,  // [0:37] is the sub-list for field type_name
+	47, // 33: talos.resource.definitions.k8s.SchedulerConfigSpec.config:type_name -> google.protobuf.Struct
+	47, // 34: talos.resource.definitions.k8s.SingleManifest.object:type_name -> google.protobuf.Struct
+	47, // 35: talos.resource.definitions.k8s.StaticPodSpec.pod:type_name -> google.protobuf.Struct
+	47, // 36: talos.resource.definitions.k8s.StaticPodStatusSpec.pod_status:type_name -> google.protobuf.Struct
+	47, // 37: talos.resource.definitions.k8s.StructuredAuthenticationConfigSpec.config:type_name -> google.protobuf.Struct
+	47, // 38: talos.resource.definitions.k8s.StructuredAuthorizationConfigSpec.config:type_name -> google.protobuf.Struct
+	39, // [39:39] is the sub-list for method output_type
+	39, // [39:39] is the sub-list for method input_type
+	39, // [39:39] is the sub-list for extension type_name
+	39, // [39:39] is the sub-list for extension extendee
+	0,  // [0:39] is the sub-list for field type_name
 }
 
 func init() { file_resource_definitions_k8s_k8s_proto_init() }
@@ -3284,6 +3395,30 @@ func file_resource_definitions_k8s_k8s_proto_init() {
 				return nil
 			}
 		}
+		file_resource_definitions_k8s_k8s_proto_msgTypes[33].Exporter = func(v any, i int) any {
+			switch v := v.(*StructuredAuthenticationConfigSpec); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_resource_definitions_k8s_k8s_proto_msgTypes[34].Exporter = func(v any, i int) any {
+			switch v := v.(*StructuredAuthorizationConfigSpec); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -3291,7 +3426,7 @@ func file_resource_definitions_k8s_k8s_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_resource_definitions_k8s_k8s_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   45,
+			NumMessages:   47,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

@@ -150,6 +150,20 @@ func (in *Input) init() ([]config.Document, error) {
 		auditPolicyConfig = v1alpha1.APIServerDefaultAuditPolicy
 	}
 
+	// var structuredAuthenticationConfig v1alpha1.Unstructured
+
+	// if in.Options.VersionContract.APIServerStructuredAuthenticationConfigSupported() {
+	// 	// TODO bmiddha
+	// 	structuredAuthenticationConfig = v1alpha1.Unstructured{}
+	// }
+
+	// var structuredAuthorizationConfig v1alpha1.Unstructured
+
+	// if in.Options.VersionContract.APIServerStructuredAuthorizationConfigSupported() {
+	// 	// TODO bmiddha
+	// 	structuredAuthenticationConfig = v1alpha1.Unstructured{}
+	// }
+
 	cluster := &v1alpha1.ClusterConfig{
 		ClusterID:     in.Options.SecretsBundle.Cluster.ID,
 		ClusterName:   in.ClusterName,
@@ -163,6 +177,8 @@ func (in *Input) init() ([]config.Document, error) {
 			ContainerImage:         emptyIf(fmt.Sprintf("%s:v%s", constants.KubernetesAPIServerImage, in.KubernetesVersion), in.KubernetesVersion),
 			AdmissionControlConfig: admissionControlConfig,
 			AuditPolicyConfig:      auditPolicyConfig,
+			// StructuredAuthenticationConfig: structuredAuthenticationConfig,
+			// StructuredAuthorizationConfig: structuredAuthorizationConfig,
 		},
 		ControllerManagerConfig: &v1alpha1.ControllerManagerConfig{
 			ContainerImage: emptyIf(fmt.Sprintf("%s:v%s", constants.KubernetesControllerManagerImage, in.KubernetesVersion), in.KubernetesVersion),
