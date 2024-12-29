@@ -19,6 +19,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	k8sjson "k8s.io/apimachinery/pkg/runtime/serializer/json"
 	apiserverv1 "k8s.io/apiserver/pkg/apis/apiserver/v1"
+	apiserverv1beta1 "k8s.io/apiserver/pkg/apis/apiserver/v1beta1"
 	auditv1 "k8s.io/apiserver/pkg/apis/audit/v1"
 	schedulerv1 "k8s.io/kube-scheduler/config/v1"
 
@@ -45,6 +46,16 @@ func (ctrl *RenderConfigsStaticPodController) Inputs() []controller.Input {
 		{
 			Namespace: k8s.ControlPlaneNamespaceName,
 			Type:      k8s.AuditPolicyConfigType,
+			Kind:      controller.InputWeak,
+		},
+		{
+			Namespace: k8s.ControlPlaneNamespaceName,
+			Type:      k8s.StructuredAuthenticationConfigType,
+			Kind:      controller.InputWeak,
+		},
+		{
+			Namespace: k8s.ControlPlaneNamespaceName,
+			Type:      k8s.StructuredAuthorizationConfigType,
 			Kind:      controller.InputWeak,
 		},
 		{
@@ -76,6 +87,11 @@ func (ctrl *RenderConfigsStaticPodController) Run(ctx context.Context, r control
 		case <-r.EventCh():
 		}
 
+		type configFile struct {
+			filename string
+			f        func() (runtime.Object, error)
+		}
+
 		admissionRes, err := safe.ReaderGetByID[*k8s.AdmissionControlConfig](ctx, r, k8s.AdmissionControlConfigID)
 		if err != nil {
 			if state.IsNotFoundError(err) {
@@ -98,6 +114,48 @@ func (ctrl *RenderConfigsStaticPodController) Run(ctx context.Context, r control
 
 		auditConfig := auditRes.TypedSpec()
 
+		var structuredAuthNConfig *k8s.StructuredAuthenticationConfigSpec
+
+		structuredAuthNRes, err := safe.ReaderGetByID[*k8s.StructuredAuthenticationConfig](ctx, r, k8s.StructuredAuthenticationConfigID)
+		if err != nil {
+			if state.IsNotFoundError(err) {
+				continue
+			}
+
+			return fmt.Errorf("error getting structured authentication config resource: %w", err)
+		}
+
+		structuredAuthNConfig = structuredAuthNRes.TypedSpec()
+
+		var structuredAuthZConfig *k8s.StructuredAuthorizationConfigSpec
+
+		structuredAuthZRes, err := safe.ReaderGetByID[*k8s.StructuredAuthorizationConfig](ctx, r, k8s.StructuredAuthorizationConfigID)
+		if err != nil {
+			if state.IsNotFoundError(err) {
+				continue
+			}
+
+			return fmt.Errorf("error getting structured authorization config resource: %w", err)
+		}
+
+		structuredAuthZConfig = structuredAuthZRes.TypedSpec()
+
+		apiServerConfigs := make([]configFile, 0)
+
+		if structuredAuthNConfig != nil && len(structuredAuthNConfig.Config) > 0 {
+			apiServerConfigs = append(apiServerConfigs, configFile{
+				filename: "authentication-config.yaml",
+				f:        structuredAuthenticationConfig(structuredAuthNConfig),
+			})
+		}
+
+		if structuredAuthZConfig != nil && len(structuredAuthZConfig.Config) > 0 {
+			apiServerConfigs = append(apiServerConfigs, configFile{
+				filename: "authorization-config.yaml",
+				f:        structuredAuthorizationConfig(structuredAuthZConfig),
+			})
+		}
+
 		kubeSchedulerRes, err := safe.ReaderGetByID[*k8s.SchedulerConfig](ctx, r, k8s.SchedulerConfigID)
 		if err != nil {
 			if state.IsNotFoundError(err) {
@@ -108,11 +166,6 @@ func (ctrl *RenderConfigsStaticPodController) Run(ctx context.Context, r control
 		}
 
 		kubeSchedulerConfig := kubeSchedulerRes.TypedSpec()
-
-		type configFile struct {
-			filename string
-			f        func() (runtime.Object, error)
-		}
 
 		serializer := k8sjson.NewSerializerWithOptions(
 			k8sjson.DefaultMetaFactory, nil, nil,
@@ -135,7 +188,7 @@ func (ctrl *RenderConfigsStaticPodController) Run(ctx context.Context, r control
 				directory: constants.KubernetesAPIServerConfigDir,
 				uid:       constants.KubernetesAPIServerRunUser,
 				gid:       constants.KubernetesAPIServerRunGroup,
-				configs: []configFile{
+				configs: append([]configFile{
 					{
 						filename: "admission-control-config.yaml",
 						f:        admissionControlConfig(admissionConfig),
@@ -144,7 +197,7 @@ func (ctrl *RenderConfigsStaticPodController) Run(ctx context.Context, r control
 						filename: "auditpolicy.yaml",
 						f:        auditPolicyConfig(auditConfig),
 					},
-				},
+				}, apiServerConfigs...),
 			},
 			{
 				name:      "kube-scheduler",
@@ -235,6 +288,38 @@ func auditPolicyConfig(spec *k8s.AuditPolicyConfigSpec) func() (runtime.Object, 
 		if err := runtime.DefaultUnstructuredConverter.FromUnstructuredWithValidation(spec.Config, &cfg, true); err != nil {
 			return nil, fmt.Errorf("error unmarshaling audit policy configuration: %w", err)
 		}
+
+		return &cfg, nil
+	}
+}
+
+func structuredAuthenticationConfig(spec *k8s.StructuredAuthenticationConfigSpec) func() (runtime.Object, error) {
+	return func() (runtime.Object, error) {
+		var cfg apiserverv1beta1.AuthenticationConfiguration
+
+		fmt.Println(spec.Config)
+
+		if err := runtime.DefaultUnstructuredConverter.FromUnstructuredWithValidation(spec.Config, &cfg, true); err != nil {
+			return nil, fmt.Errorf("error unmarshaling structured authentication configuration: %w", err)
+		}
+
+		cfg.APIVersion = "apiserver.config.k8s.io/v1beta1"
+		cfg.Kind = "AuthenticationConfiguration"
+
+		return &cfg, nil
+	}
+}
+
+func structuredAuthorizationConfig(spec *k8s.StructuredAuthorizationConfigSpec) func() (runtime.Object, error) {
+	return func() (runtime.Object, error) {
+		var cfg apiserverv1beta1.AuthorizationConfiguration
+
+		if err := runtime.DefaultUnstructuredConverter.FromUnstructuredWithValidation(spec.Config, &cfg, true); err != nil {
+			return nil, fmt.Errorf("error unmarshaling structured authorization configuration: %w", err)
+		}
+
+		cfg.APIVersion = "apiserver.config.k8s.io/v1beta1"
+		cfg.Kind = "AuthorizationConfiguration"
 
 		return &cfg, nil
 	}

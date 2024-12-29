@@ -55,4 +55,3 @@ message SystemInformationSpec {
   string wake_up_type = 6;
   string sku_number = 7;
 }
-

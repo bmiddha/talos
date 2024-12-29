@@ -1443,6 +1443,20 @@ func (APIServerConfig) Doc() *encoder.Doc {
 				Comments:    [3]string{"" /* encoder.HeadComment */, "Configure the API server audit policy." /* encoder.LineComment */, "" /* encoder.FootComment */},
 			},
 			{
+				Name:        "authenticationConfig",
+				Type:        "Unstructured",
+				Note:        "",
+				Description: "Configure the API server authentication.",
+				Comments:    [3]string{"" /* encoder.HeadComment */, "Configure the API server authentication." /* encoder.LineComment */, "" /* encoder.FootComment */},
+			},
+			{
+				Name:        "authorizationConfig",
+				Type:        "Unstructured",
+				Note:        "",
+				Description: "Configure the API server authorization.",
+				Comments:    [3]string{"" /* encoder.HeadComment */, "Configure the API server authorization." /* encoder.LineComment */, "" /* encoder.FootComment */},
+			},
+			{
 				Name:        "resources",
 				Type:        "ResourcesConfig",
 				Note:        "",

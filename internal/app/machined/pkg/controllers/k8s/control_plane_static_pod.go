@@ -7,6 +7,7 @@ package k8s
 import (
 	"context"
 	"fmt"
+	"os"
 	"path/filepath"
 	"slices"
 	"strconv"
@@ -398,6 +399,18 @@ func (ctrl *ControlPlaneStaticPodController) manageAPIServer(ctx context.Context
 		"tls-cert-file":                    filepath.Join(constants.KubernetesAPIServerSecretsDir, "apiserver.crt"),
 		"tls-private-key-file":             filepath.Join(constants.KubernetesAPIServerSecretsDir, "apiserver.key"),
 		"kubelet-preferred-address-types":  "InternalIP,ExternalIP,Hostname",
+	}
+
+	apiServerAuthNConfigPath := filepath.Join(constants.KubernetesAPIServerConfigDir, "authentication-config.yaml")
+
+	if _, err := os.Stat(apiServerAuthNConfigPath); err == nil {
+		builder.Set("authentication-config", apiServerAuthNConfigPath)
+	}
+
+	apiServerAuthZConfigPath := filepath.Join(constants.KubernetesAPIServerConfigDir, "authorization-config.yaml")
+
+	if _, err := os.Stat(apiServerAuthZConfigPath); err == nil {
+		builder.Set("authorization-config", apiServerAuthZConfigPath)
 	}
 
 	if cfg.AdvertisedAddress != "" {

@@ -166,4 +166,3 @@ message VolumeStatusSpec {
   talos.resource.definitions.enums.BlockEncryptionProviderType encryption_provider = 12;
   string pretty_size = 13;
 }
-

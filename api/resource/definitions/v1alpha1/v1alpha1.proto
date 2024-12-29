@@ -11,4 +11,3 @@ message ServiceSpec {
   bool healthy = 2;
   bool unknown = 3;
 }
-

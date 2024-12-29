@@ -15,4 +15,3 @@ message EtcFileSpecSpec {
 message EtcFileStatusSpec {
   string spec_version = 1;
 }
-

@@ -3289,6 +3289,20 @@ auditPolicy:
     rules:
         - level: Metadata
 {{< /highlight >}}</details> | |
+|`authenticationConfig` |Unstructured |Configure the API server authentication.  <details><summary>Show example(s)</summary>{{< highlight yaml >}}
+auditPolicy:
+    apiVersion: audit.k8s.io/v1
+    kind: Policy
+    rules:
+        - level: Metadata
+{{< /highlight >}}</details> | |
+|`authorizationConfig` |Unstructured |Configure the API server authorization.  <details><summary>Show example(s)</summary>{{< highlight yaml >}}
+auditPolicy:
+    apiVersion: audit.k8s.io/v1
+    kind: Policy
+    rules:
+        - level: Metadata
+{{< /highlight >}}</details> | |
 |`resources` |<a href="#Config.cluster.apiServer.resources">ResourcesConfig</a> |Configure the API server resources.  | |
 
 

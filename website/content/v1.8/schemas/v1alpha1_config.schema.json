@@ -80,6 +80,20 @@
           "markdownDescription": "Configure the API server audit policy.",
           "x-intellij-html-description": "\u003cp\u003eConfigure the API server audit policy.\u003c/p\u003e\n"
         },
+        "authenticationConfig": {
+          "type": "object",
+          "title": "authenticationConfig",
+          "description": "Configure the API server structured authentication.\n",
+          "markdownDescription": "Configure the API server structured authentication.",
+          "x-intellij-html-description": "\u003cp\u003eConfigure the API server structured authentication.\u003c/p\u003e\n"
+        },
+        "authorizationConfig": {
+          "type": "object",
+          "title": "authorizationConfig",
+          "description": "Configure the API server structured authorization.\n",
+          "markdownDescription": "Configure the API server structured authorization.",
+          "x-intellij-html-description": "\u003cp\u003eConfigure the API server structured authorization.\u003c/p\u003e\n"
+        },
         "resources": {
           "type": "object",
           "title": "resources",

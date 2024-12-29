@@ -1172,6 +1172,16 @@ type APIServerConfig struct {
 	//     type: object
 	AuditPolicyConfig Unstructured `yaml:"auditPolicy,omitempty" merge:"replace"`
 	//   description: |
+	//     Configure the API server authentication.
+	//   schema:
+	//     type: object
+	StructuredAuthenticationConfig Unstructured `yaml:"authenticationConfig,omitempty"`
+	//   description: |
+	//     Configure the API server authorization.
+	//   schema:
+	//     type: object
+	StructuredAuthorizationConfig Unstructured `yaml:"authorizationConfig,omitempty"`
+	//   description: |
 	//     Configure the API server resources.
 	//   schema:
 	//     type: object

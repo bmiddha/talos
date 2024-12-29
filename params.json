@@ -1,0 +1,9 @@
+{
+  "name": "kubernetes-federated-credential",
+  "issuer": "https://talostestinglinuxknight.blob.core.windows.net/oidctest",
+  "subject": "system:serviceaccount:default:workload-identity-sa",
+  "description": "Kubernetes service account federated credential",
+  "audiences": [
+    "api://AzureADTokenExchange"
+  ]
+}

@@ -30,4 +30,3 @@ message Metadata {
   Compatibility compatibility = 5;
   string extra_info = 6;
 }
-

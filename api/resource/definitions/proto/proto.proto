@@ -21,4 +21,3 @@ message Mount {
   repeated LinuxIDMapping uid_mappings = 5;
   repeated LinuxIDMapping gid_mappings = 6;
 }
-

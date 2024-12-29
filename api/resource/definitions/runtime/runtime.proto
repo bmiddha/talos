@@ -148,4 +148,3 @@ message WatchdogTimerStatusSpec {
   google.protobuf.Duration timeout = 2;
   google.protobuf.Duration feed_interval = 3;
 }
-

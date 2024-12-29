@@ -258,3 +258,12 @@ message StaticPodStatusSpec {
   google.protobuf.Struct pod_status = 1;
 }
 
+// StructuredAuthenticationConfigSpec is structured authentication configuration for kube-apiserver.
+message StructuredAuthenticationConfigSpec {
+  google.protobuf.Struct config = 1;
+}
+
+// StructuredAuthorizationConfigSpec is structured authorization configuration for kube-apiserver.
+message StructuredAuthorizationConfigSpec {
+  google.protobuf.Struct config = 1;
+}

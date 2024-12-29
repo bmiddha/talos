@@ -169,3 +169,13 @@ func (contract *VersionContract) AddExcludeFromExternalLoadBalancer() bool {
 func (contract *VersionContract) SecureBootEnrollEnforcementSupported() bool {
 	return contract.Greater(TalosVersion1_7)
 }
+
+// APIServerStructuredAuthenticationConfigSupported returns true if kube-apiserver structured authentication config is supported.
+func (contract *VersionContract) APIServerStructuredAuthenticationConfigSupported() bool {
+	return contract.Greater(TalosVersion1_8)
+}
+
+// APIServerStructuredAuthorizationConfigSupported returns true if kube-apiserver structured authorization config is supported.
+func (contract *VersionContract) APIServerStructuredAuthorizationConfigSupported() bool {
+	return contract.Greater(TalosVersion1_8)
+}
