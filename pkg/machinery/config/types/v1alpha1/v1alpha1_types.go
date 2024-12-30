@@ -1148,6 +1148,11 @@ type APIServerConfig struct {
 	//   examples:
 	//     - value: authorizationConfigExample()
 	AuthorizationConfigConfig AuthorizationConfigAuthorizerConfigList `yaml:"authorizationConfig,omitempty"`
+	//   description: |
+	//     Configure the API server authentication.
+	//   schema:
+	//     type: object
+	StructuredAuthenticationConfig Unstructured `yaml:"authenticationConfig,omitempty"`
 }
 
 // AdmissionPluginConfigList represents the admission plugin configuration list.

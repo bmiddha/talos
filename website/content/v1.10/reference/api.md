@@ -180,6 +180,8 @@ description: Talos gRPC API reference.
     - [StaticPodServerStatusSpec](#talos.resource.definitions.k8s.StaticPodServerStatusSpec)
     - [StaticPodSpec](#talos.resource.definitions.k8s.StaticPodSpec)
     - [StaticPodStatusSpec](#talos.resource.definitions.k8s.StaticPodStatusSpec)
+    - [StructuredAuthenticationConfigSpec](#talos.resource.definitions.k8s.StructuredAuthenticationConfigSpec)
+    - [StructuredAuthorizationConfigSpec](#talos.resource.definitions.k8s.StructuredAuthorizationConfigSpec)
   
 - [resource/definitions/kubeaccess/kubeaccess.proto](#resource/definitions/kubeaccess/kubeaccess.proto)
     - [ConfigSpec](#talos.resource.definitions.kubeaccess.ConfigSpec)
@@ -3348,6 +3350,35 @@ StaticPodStatusSpec describes kubelet static pod status.
 | ----- | ---- | ----- | ----------- |
 | pod_status | [google.protobuf.Struct](#google.protobuf.Struct) |  |  |
 
+
+
+
+
+
+<a name="talos.resource.definitions.k8s.StructuredAuthenticationConfigSpec"></a>
+
+### StructuredAuthenticationConfigSpec
+StructuredAuthenticationConfigSpec is structured authentication configuration for kube-apiserver.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| config | [google.protobuf.Struct](#google.protobuf.Struct) |  |  |
+
+
+
+
+
+
+<a name="talos.resource.definitions.k8s.StructuredAuthorizationConfigSpec"></a>
+
+### StructuredAuthorizationConfigSpec
+StructuredAuthorizationConfigSpec is structured authorization configuration for kube-apiserver.
+
+
+| Field | Type | Label | Description |
+| ----- | ---- | ----- | ----------- |
+| config | [google.protobuf.Struct](#google.protobuf.Struct) |  |  |
 
 
 

@@ -1472,6 +1472,13 @@ func (APIServerConfig) Doc() *encoder.Doc {
 				Description: "Configure the API server authorization config. Node and RBAC authorizers are always added irrespective of the configuration.",
 				Comments:    [3]string{"" /* encoder.HeadComment */, "Configure the API server authorization config. Node and RBAC authorizers are always added irrespective of the configuration." /* encoder.LineComment */, "" /* encoder.FootComment */},
 			},
+			{
+				Name:        "authenticationConfig",
+				Type:        "Unstructured",
+				Note:        "",
+				Description: "Configure the API server authentication.",
+				Comments:    [3]string{"" /* encoder.HeadComment */, "Configure the API server authentication." /* encoder.LineComment */, "" /* encoder.FootComment */},
+			},
 		},
 	}
 

@@ -690,6 +690,13 @@
           "description": "Configure the API server authorization config. Node and RBAC authorizers are always added irrespective of the configuration.\n",
           "markdownDescription": "Configure the API server authorization config. Node and RBAC authorizers are always added irrespective of the configuration.",
           "x-intellij-html-description": "\u003cp\u003eConfigure the API server authorization config. Node and RBAC authorizers are always added irrespective of the configuration.\u003c/p\u003e\n"
+        },
+        "authenticationConfig": {
+          "type": "object",
+          "title": "authenticationConfig",
+          "description": "Configure the API server authentication.\n",
+          "markdownDescription": "Configure the API server authentication.",
+          "x-intellij-html-description": "\u003cp\u003eConfigure the API server authentication.\u003c/p\u003e\n"
         }
       },
       "additionalProperties": false,

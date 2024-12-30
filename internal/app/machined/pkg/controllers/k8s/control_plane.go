@@ -153,6 +153,26 @@ func NewControlPlaneAuthorizationController() *ControlPlaneAuthorizationControll
 	)
 }
 
+// ControlPlaneStructuredAuthenticationController manages k8s.StructuredAuthenticationConfig based on configuration.
+type ControlPlaneStructuredAuthenticationController = transform.Controller[*config.MachineConfig, *k8s.StructuredAuthenticationConfig]
+
+// NewControlPlaneStructuredAuthenticationController instanciates the controller.
+func NewControlPlaneStructuredAuthenticationController() *ControlPlaneStructuredAuthenticationController {
+	return transform.NewController(
+		transform.Settings[*config.MachineConfig, *k8s.StructuredAuthenticationConfig]{
+			Name:                    "k8s.ControlPlaneStructuredAuthenticationController",
+			MapMetadataOptionalFunc: controlplaneMapFunc(k8s.NewStructuredAuthenticationConfig()),
+			TransformFunc: func(ctx context.Context, r controller.Reader, logger *zap.Logger, machineConfig *config.MachineConfig, res *k8s.StructuredAuthenticationConfig) error {
+				cfgProvider := machineConfig.Config()
+
+				res.TypedSpec().Config = cfgProvider.Cluster().APIServer().StructuredAuthentication()
+
+				return nil
+			},
+		},
+	)
+}
+
 // ControlPlaneAPIServerController manages k8s.APIServerConfig based on configuration.
 type ControlPlaneAPIServerController = transform.Controller[*config.MachineConfig, *k8s.APIServerConfig]
 
