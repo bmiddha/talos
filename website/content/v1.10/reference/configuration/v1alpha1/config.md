@@ -3388,6 +3388,39 @@ auditPolicy:
     rules:
         - level: Metadata
 {{< /highlight >}}</details> | |
+|`authenticationConfig` |Unstructured |Configure the API server authentication.  <details><summary>Show example(s)</summary>{{< highlight yaml >}}
+```yaml
+authenticationConfig:
+    jwt:
+        - issuer:
+            url: "https://myissuer.example.com"
+            audiences:
+                - "audience_check"
+            audienceMatchPolicy: "MatchAny"
+            claimMappings:
+                username:
+                    claim: "sub"
+                    prefix: "my_oidc"
+```
+|`authorizationConfig` |Unstructured |Configure the API server authorization.  <details><summary>Show example(s)</summary>{{< highlight yaml >}}
+```yaml
+authorizationConfig:
+    - type: Node
+        name: node
+    - type: RBAC
+        name: rbac
+    - type: Webhook
+        name: in-cluster-authorizer
+        webhook:
+            authorizedTTL: 5m
+            unauthorizedTTL: 30s
+            timeout: 3s
+            subjectAccessReviewVersion: v1
+            failurePolicy: NoOpinion
+            connectionInfo:
+                type: InClusterConfig
+```
+
 |`resources` |<a href="#Config.cluster.apiServer.resources">ResourcesConfig</a> |Configure the API server resources.  | |
 |`authorizationConfig` |<a href="#Config.cluster.apiServer.authorizationConfig.">[]AuthorizationConfigAuthorizerConfig</a> |Configure the API server authorization config. Node and RBAC authorizers are always added irrespective of the configuration. <details><summary>Show example(s)</summary>{{< highlight yaml >}}
 authorizationConfig:

@@ -166,6 +166,26 @@ func NewControlPlaneAuthorizationController() *ControlPlaneAuthorizationControll
 	)
 }
 
+// AuthenticationController manages k8s.AuthenticationConfig based on configuration.
+type ControlPlaneAuthenticationController = transform.Controller[*config.MachineConfig, *k8s.AuthenticationConfig]
+
+// ControlPlaneAuthenticationController instanciates the controller.
+func NewControlPlaneAuthenticationController() *ControlPlaneAuthenticationController {
+	return transform.NewController(
+		transform.Settings[*config.MachineConfig, *k8s.AuthenticationConfig]{
+			Name:                    "k8s.ControlPlaneAuthenticationConfigController",
+			MapMetadataOptionalFunc: controlplaneMapFunc(k8s.NewAuthenticationConfig()),
+			TransformFunc: func(ctx context.Context, r controller.Reader, logger *zap.Logger, machineConfig *config.MachineConfig, res *k8s.AuthenticationConfig) error {
+				cfgProvider := machineConfig.Config()
+
+				res.TypedSpec().Config = cfgProvider.Cluster().APIServer().Authentication()
+
+				return nil
+			},
+		},
+	)
+}
+
 // ControlPlaneAPIServerController manages k8s.APIServerConfig based on configuration.
 type ControlPlaneAPIServerController = transform.Controller[*config.MachineConfig, *k8s.APIServerConfig]
 

@@ -86,6 +86,14 @@ func (a *APIServerConfig) AuditPolicy() map[string]any {
 	return a.AuditPolicyConfig.Object
 }
 
+// Authentication implements the config.APIServer interface.
+func (a *APIServerConfig) Authentication() map[string]any {
+	if len(a.AuthenticationConfig.Object) == 0 {
+		return nil
+	}
+	return a.AuthenticationConfig.Object
+}
+
 // Resources implements the config.Resources interface.
 func (a *APIServerConfig) Resources() config.Resources {
 	return a.ResourcesConfig

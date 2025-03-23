@@ -20,6 +20,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	k8sjson "k8s.io/apimachinery/pkg/runtime/serializer/json"
 	apiserverv1 "k8s.io/apiserver/pkg/apis/apiserver/v1"
+	apiserverv1beta1 "k8s.io/apiserver/pkg/apis/apiserver/v1beta1"
 	auditv1 "k8s.io/apiserver/pkg/apis/audit/v1"
 	schedulerv1 "k8s.io/kube-scheduler/config/v1"
 
@@ -59,6 +60,11 @@ func (ctrl *RenderConfigsStaticPodController) Inputs() []controller.Input {
 			Type:      k8s.SchedulerConfigType,
 			Kind:      controller.InputWeak,
 		},
+		{
+			Namespace: k8s.ControlPlaneNamespaceName,
+			Type:      k8s.AuthenticationConfigType,
+			Kind:      controller.InputWeak,
+		},
 	}
 }
 
@@ -81,6 +87,11 @@ func (ctrl *RenderConfigsStaticPodController) Run(ctx context.Context, r control
 		case <-ctx.Done():
 			return nil
 		case <-r.EventCh():
+		}
+
+		type configFile struct {
+			filename string
+			f        func() (runtime.Object, error)
 		}
 
 		admissionRes, err := safe.ReaderGetByID[*k8s.AdmissionControlConfig](ctx, r, k8s.AdmissionControlConfigID)
@@ -118,6 +129,41 @@ func (ctrl *RenderConfigsStaticPodController) Run(ctx context.Context, r control
 
 		kubeAPIServerVersion := compatibility.VersionFromImageRef(authorizerConfig.Image)
 
+		apiServerConfigs := []configFile{
+			{
+				filename: "admission-control-config.yaml",
+				f:        admissionControlConfig(admissionConfig),
+			},
+			{
+				filename: "auditpolicy.yaml",
+				f:        auditPolicyConfig(auditConfig),
+			},
+			{
+				filename: "authorization-config.yaml",
+				f:        authorizationConfig(authorizerConfig, kubeAPIServerVersion),
+			},
+		}
+
+		var authenticationConfig *k8s.AuthenticationConfigSpec
+
+		authenticationConfigRes, err := safe.ReaderGetByID[*k8s.AuthenticationConfig](ctx, r, k8s.AuthenticationConfigID)
+		if err != nil {
+			if state.IsNotFoundError(err) {
+				continue
+			}
+
+			return fmt.Errorf("error getting structured authentication config resource: %w", err)
+		}
+
+		authenticationConfig = authenticationConfigRes.TypedSpec()
+
+		if authenticationConfig != nil && len(authenticationConfig.Config) > 0 {
+			apiServerConfigs = append(apiServerConfigs, configFile{
+				filename: "authentication-config.yaml",
+				f:        authenticationConfig(authenticationConfig),
+			})
+		}
+
 		kubeSchedulerRes, err := safe.ReaderGetByID[*k8s.SchedulerConfig](ctx, r, k8s.SchedulerConfigID)
 		if err != nil {
 			if state.IsNotFoundError(err) {
@@ -128,11 +174,6 @@ func (ctrl *RenderConfigsStaticPodController) Run(ctx context.Context, r control
 		}
 
 		kubeSchedulerConfig := kubeSchedulerRes.TypedSpec()
-
-		type configFile struct {
-			filename string
-			f        func() (runtime.Object, error)
-		}
 
 		serializer := k8sjson.NewSerializerWithOptions(
 			k8sjson.DefaultMetaFactory, nil, nil,
@@ -157,20 +198,7 @@ func (ctrl *RenderConfigsStaticPodController) Run(ctx context.Context, r control
 				selinuxLabel: constants.KubernetesAPIServerConfigDirSELinuxLabel,
 				uid:          constants.KubernetesAPIServerRunUser,
 				gid:          constants.KubernetesAPIServerRunGroup,
-				configs: []configFile{
-					{
-						filename: "admission-control-config.yaml",
-						f:        admissionControlConfig(admissionConfig),
-					},
-					{
-						filename: "auditpolicy.yaml",
-						f:        auditPolicyConfig(auditConfig),
-					},
-					{
-						filename: "authorization-config.yaml",
-						f:        authorizationConfig(authorizerConfig, kubeAPIServerVersion),
-					},
-				},
+				configs:      apiServerConfigs,
 			},
 			{
 				name:         "kube-scheduler",
@@ -316,6 +344,23 @@ func authorizationConfig(spec *k8s.AuthorizationConfigSpec, kubeAPIServerVersion
 
 			cfg.Authorizers = append(cfg.Authorizers, authorizerConfig)
 		}
+
+		return &cfg, nil
+	}
+}
+
+func authenticationConfig(spec *k8s.AuthenticationConfigSpec) func() (runtime.Object, error) {
+	return func() (runtime.Object, error) {
+		var cfg apiserverv1beta1.AuthenticationConfiguration
+
+		fmt.Println(spec.Config)
+
+		if err := runtime.DefaultUnstructuredConverter.FromUnstructuredWithValidation(spec.Config, &cfg, true); err != nil {
+			return nil, fmt.Errorf("error unmarshaling authentication configuration: %w", err)
+		}
+
+		cfg.APIVersion = "apiserver.config.k8s.io/v1beta1"
+		cfg.Kind = "AuthenticationConfiguration"
 
 		return &cfg, nil
 	}

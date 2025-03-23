@@ -41,6 +41,11 @@ message AuditPolicyConfigSpec {
   google.protobuf.Struct config = 1;
 }
 
+// AuthenticationConfigSpec is  authentication configuration for kube-apiserver.
+message AuthenticationConfigSpec {
+  google.protobuf.Struct config = 1;
+}
+
 // AuthorizationAuthorizersSpec is a configuration of authorization authorizers.
 message AuthorizationAuthorizersSpec {
   string type = 1;

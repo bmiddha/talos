@@ -86,6 +86,13 @@
           "description": "Configure the API server resources.\n",
           "markdownDescription": "Configure the API server resources.",
           "x-intellij-html-description": "\u003cp\u003eConfigure the API server resources.\u003c/p\u003e\n"
+        },
+        "authenticationConfig": {
+          "type": "object",
+          "title": "authenticationConfig",
+          "description": "Configure the API server structured authentication.\n",
+          "markdownDescription": "Configure the API server structured authentication.",
+          "x-intellij-html-description": "\u003cp\u003eConfigure the API server structured authentication.\u003c/p\u003e\n"
         }
       },
       "additionalProperties": false,

@@ -7,6 +7,7 @@ package k8s
 import (
 	"context"
 	"fmt"
+	"os"
 	"path/filepath"
 	"slices"
 	"strconv"
@@ -410,6 +411,7 @@ func (ctrl *ControlPlaneStaticPodController) manageAPIServer(ctx context.Context
 	}
 
 	handleKubeAPIServerAuthorizationFlags(k8sVersion, builder, cfg.ExtraArgs)
+	handleKubeAPIServerAuthenticationFlags(k8sVersion, builder, cfg.ExtraArgs)
 
 	mergePolicies := argsbuilder.MergePolicies{
 		"enable-admission-plugins": argsbuilder.MergeAdditive,
@@ -964,4 +966,23 @@ func handleKubeAPIServerAuthorizationFlags(kubeVersion compatibility.Version, ar
 	}
 
 	argBuilder.Set("authorization-config", filepath.Join(constants.KubernetesAPIServerConfigDir, "authorization-config.yaml"))
+}
+
+func handleKubeAPIServerAuthenticationFlags(kubeVersion compatibility.Version, argBuilder argsbuilder.Args, extraArgs map[string]string) {
+	// TODO: bmiddha. add feature flag
+	// if !kubeVersion.FeatureFlagStructuredAuthenticationConfigurationEnabledByDefault() {
+		// feature-gates flag can be set multiple times, since it has merge addictive policy
+		argBuilder.Set("feature-gates", "StructuredAuthenticationConfiguration=true")
+	// }
+
+	apiServerAuthenticationConfigPath := filepath.Join(constants.KubernetesAPIServerConfigDir, "authentication-config.yaml")
+	if _, err := os.Stat(apiServerAuthenticationConfigPath); err == nil {
+		argBuilder.Set("authentication-config", apiServerAuthenticationConfigPath)
+	}
+	// argBuilder.Set("authentication-config", filepath.Join(constants.KubernetesAPIServerConfigDir, "authorization-config.yaml"))
+	// apiServerAuthNConfigPath := filepath.Join(constants.KubernetesAPIServerConfigDir, "authentication-config.yaml")
+
+	// if _, err := os.Stat(apiServerAuthNConfigPath); err == nil {
+	// 	builder.Set("authentication-config", apiServerAuthNConfigPath)
+	// }
 }
